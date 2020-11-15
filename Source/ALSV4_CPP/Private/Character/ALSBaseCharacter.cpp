@@ -1215,7 +1215,19 @@ bool AALSBaseCharacter::MantleCheck(const FALSMantleTraceSettings& TraceSettings
 		// Not a valid surface to mantle
 		return false;
 	}
+	
 
+	if (HitResult.GetComponent() != nullptr) 
+	{
+		UPrimitiveComponent* PrimitiveComponent = HitResult.GetComponent();
+
+		if (!ComponentCancelMantlingTag.IsNone() && PrimitiveComponent->ComponentHasTag(ComponentCancelMantlingTag))
+		{
+			//The surface to mantle has a tag that forbid it
+			return false;
+		}
+	}
+	
 	const FVector InitialTraceImpactPoint = HitResult.ImpactPoint;
 	const FVector InitialTraceNormal = HitResult.ImpactNormal;
 
@@ -1283,7 +1295,7 @@ void AALSBaseCharacter::MantleUpdate(float BlendIn)
 {
 	// Step 1: Continually update the mantle target from the stored local transform to follow along with moving objects
 	MantleTarget = UALSMathLibrary::MantleComponentLocalToWorld(MantleLedgeLS);
-
+		
 	// Step 2: Update the Position and Correction Alphas using the Position/Correction curve set for each Mantle.
 	const FVector CurveVec = MantleParams.PositionCorrectionCurve
 	                                     ->GetVectorValue(MantleParams.StartingPosition + MantleTimeline->GetPlaybackPosition());

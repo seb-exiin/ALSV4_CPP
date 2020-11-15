@@ -521,6 +521,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ALS|Mantle System")
 	UCurveFloat* MantleTimelineCurve;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ALS|Mantle System")
+	FName ComponentCancelMantlingTag;
+
 	/** Components */
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ALS|Components")
